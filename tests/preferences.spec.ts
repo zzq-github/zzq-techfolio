@@ -164,9 +164,29 @@ test('published resource URLs have one base prefix and return their actual files
     expect(response.ok()).toBe(true)
     expect(response.headers()['content-type']).not.toContain('text/html')
   }
-  for (const asset of ['resume.pdf', 'data/land-110m.geojson', 'atmosphere/terrain.svg']) {
+  for (const asset of ['data/land-110m.geojson', 'atmosphere/terrain.svg']) {
     const response = await request.get('/zzq-techfolio/' + asset)
     expect(response.ok()).toBe(true)
     expect(await response.body()).toEqual(fs.readFileSync('public/' + asset))
   }
+})
+
+test('the retired PDF resume is absent from both languages and published files', async ({
+  page,
+  request,
+}) => {
+  expect(fs.existsSync('public/resume.pdf')).toBe(false)
+  expect(fs.existsSync('dist/resume.pdf')).toBe(false)
+  await page.goto('./')
+  await expect(page.getByRole('link', { name: /简历|résumé|resume/i })).toHaveCount(0)
+  await expect(page.locator('a[href*="resume.pdf"]')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: '探索我的项目', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Switch to English', exact: true }).click()
+  await expect(page.getByRole('link', { name: /简历|résumé|resume/i })).toHaveCount(0)
+  await expect(page.locator('a[href*="resume.pdf"]')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Explore my work', exact: true })).toBeVisible()
+  // A static SPA preview may return its HTML fallback, but must never return the removed PDF.
+  const response = await request.get('/zzq-techfolio/resume.pdf')
+  expect(response.headers()['content-type'] ?? '').not.toContain('application/pdf')
+  expect((await response.body()).subarray(0, 5).toString()).not.toBe('%PDF-')
 })

@@ -1,9 +1,8 @@
 import { usePreferences } from '../../preferences/context'
 import { useContent } from '../../i18n/useContent'
-import { ArrowDown, ArrowUpRight, CodeXml, FileDown, MapPin, ScanLine } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, CodeXml, MapPin, ScanLine } from 'lucide-react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
-import { siteConfig } from '../../config/site'
 import type { PointerEvent } from 'react'
 import { GeoGlobe } from './GeoGlobe'
 
@@ -57,17 +56,6 @@ export function Hero() {
             {' '}
             {t('探索我的项目')} <ArrowUpRight size={17} aria-hidden="true" />
           </a>
-          {siteConfig.enableResumeDownload && (
-            <a
-              className="button ghost"
-              href={profile.resumeUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={t('在新窗口打开 PDF 简历')}
-            >
-              <FileDown size={17} aria-hidden="true" /> {t('下载简历')}{' '}
-            </a>
-          )}
           <a
             className="button hero-github"
             href={profile.github}

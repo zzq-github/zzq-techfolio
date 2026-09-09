@@ -426,6 +426,7 @@ export function createBridgeScene(publish: PublishScene): SceneModule {
     pickables,
     update(options, _time, delta) {
       if (options.resetVersion !== resetVersion) {
+        const restoring = resetVersion === -1 && (options.discoveredIds?.length ?? 0) > 0
         resetVersion = options.resetVersion
         discovered.clear()
         pickables.splice(0)
@@ -439,6 +440,22 @@ export function createBridgeScene(publish: PublishScene): SceneModule {
         manualProgress = 0
         phase = 'ready'
         activeDefect = defects[0]
+        if (restoring) {
+          // Restore actual records, not a percentage: discovery order can differ
+          // when automatic travel and the manual checkpoint action are combined.
+          for (const defect of defects) {
+            if (!options.discoveredIds?.includes(defect.definition.id)) continue
+            discovered.add(defect.definition.id)
+            defect.marker.visible = true
+            pickables.push(defect.pick)
+            activeDefect = defect
+          }
+          drone.position.copy(activeDefect.observer)
+          pointCamera(activeDefect)
+          nextStation = nextUnseen(0)
+          manualProgress = options.progress
+          phase = 'found'
+        }
       }
       const requestedProgress = THREE.MathUtils.clamp(options.progress, 0, 100)
       if (requestedProgress !== manualProgress) {

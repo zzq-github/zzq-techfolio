@@ -73,6 +73,59 @@ dialog.scene-lab.is-expanded {
 .scene-lab .scene-lab-body {
   grid-template-columns: minmax(0, 1fr) 340px;
 }
+.scene-panel-shell {
+  display: contents;
+}
+.scene-panel-toggle {
+  display: none;
+}
+.scene-stage-actions {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  gap: 6px;
+}
+.scene-lab .scene-stage-actions button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid #71b6b64d;
+  border-radius: 8px;
+  background: #091923ed;
+  color: #b6f3e6;
+}
+.scene-lab .scene-stage-actions button[aria-pressed='true'] {
+  border-color: #78ead6;
+  background: #214a50;
+}
+.scene-lab .scene-stage-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.scene-lab .simulation-hud > span:last-child {
+  display: none;
+}
+.scene-mode-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+  padding: 10px 12px;
+  border-left: 2px solid var(--mint);
+  border-radius: 0 6px 6px 0;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.scene-mode-summary strong {
+  color: var(--text);
+  font-weight: 500;
+}
 .scene-lab .simulation-stage {
   height: 660px;
   min-height: 0;
@@ -112,7 +165,7 @@ dialog.scene-lab.is-expanded {
 }
 .scene-lab .scene-event {
   position: absolute;
-  top: 54px;
+  top: 64px;
   left: 22px;
   right: 22px;
   display: flex;
@@ -478,6 +531,12 @@ dialog.scene-lab.is-expanded {
 .scene-lab .scene-object:hover:not(:disabled) {
   border-color: var(--mint);
 }
+.scene-lab .scenario-primary[aria-disabled='true'] {
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: default;
+}
 .scene-lab.is-expanded .simulation-stage {
   height: max(420px, calc(100dvh - 240px));
 }
@@ -567,7 +626,7 @@ dialog.scene-lab.is-expanded {
     padding: 24px 20px;
   }
   .scene-lab .scene-event {
-    top: 44px;
+    top: 64px;
     left: 14px;
     right: 14px;
     max-width: calc(100% - 28px);
@@ -601,5 +660,237 @@ dialog.scene-lab.is-expanded {
 @media (prefers-reduced-motion: reduce) {
   .scene-lab .scene-lab-body {
     animation: none;
+  }
+}
+
+/* Expanded phone view keeps the model on screen while only the controls scroll. */
+@media (max-width: 767px), (max-width: 920px) and (max-height: 500px) {
+  dialog.scene-lab.is-expanded {
+    display: flex;
+    flex-direction: column;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    overflow: hidden;
+  }
+  .scene-lab.is-expanded .scene-lab-heading {
+    flex: 0 0 auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 10px 14px;
+    gap: 12px;
+  }
+  .scene-lab.is-expanded .scene-lab-heading > div {
+    gap: 9px;
+    min-width: 0;
+  }
+  .scene-lab.is-expanded .scene-lab-heading p,
+  .scene-lab.is-expanded .scene-heading-actions .simulation-badge {
+    display: none;
+  }
+  .scene-lab.is-expanded .scene-lab-heading h3 {
+    font-size: 17px;
+    letter-spacing: 0;
+  }
+  .scene-lab.is-expanded .lab-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+  .scene-lab.is-expanded .scene-heading-actions {
+    width: auto;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .scene-lab.is-expanded .scene-expand {
+    min-height: 44px;
+  }
+  .scene-lab.is-expanded .scene-selector {
+    display: flex;
+    flex: 0 0 auto;
+    padding: 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+  .scene-lab.is-expanded .scene-selector button {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  .scene-lab.is-expanded .scene-selector button small {
+    display: none;
+  }
+  .scene-lab.is-expanded .scene-lab-body {
+    flex: 1 1 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(180px, 43%) minmax(0, 1fr);
+    overflow: hidden;
+  }
+  .scene-lab.is-expanded .simulation-stage {
+    height: 100%;
+    min-height: 0;
+  }
+  .scene-lab.is-expanded .simulation-hud {
+    top: 25px;
+    left: 14px;
+  }
+  .scene-lab.is-expanded .scene-event {
+    top: 64px;
+    left: 14px;
+    right: 14px;
+    max-width: calc(100% - 28px);
+    padding: 6px 9px;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .scene-lab.is-expanded .scene-camera-tools {
+    bottom: 12px;
+    left: 12px;
+    padding: 3px;
+  }
+  .scene-lab.is-expanded .scene-camera-tools button {
+    width: 40px;
+    height: 40px;
+  }
+  .scene-lab.is-expanded .simulation-watermark {
+    right: 12px;
+    bottom: 68px;
+    font-size: 10px;
+  }
+  .scene-lab.is-expanded .scene-selection-label {
+    bottom: 64px;
+    left: 12px;
+    right: 12px;
+    width: fit-content;
+    max-width: calc(100% - 24px);
+    padding: 5px 7px 5px 10px;
+  }
+  .scene-lab.is-expanded .scene-selection-label span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .scene-lab.is-expanded .scene-panel-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .scene-lab.is-expanded .scene-panel-toggle {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--surface-soft);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+  }
+  .scene-panel-toggle > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .scene-panel-toggle small {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 400;
+  }
+  .scene-lab.is-expanded .simulation-panel {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: none;
+    padding: 16px;
+    border-left: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-padding-block: 16px;
+  }
+  .scene-lab.is-expanded .simulation-kicker {
+    display: none;
+  }
+  .scene-lab.is-expanded .simulation-panel h4 {
+    font-size: 17px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .scene-lab.is-expanded .simulation-description {
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .scene-lab.is-expanded .scenario-modes {
+    margin-bottom: 16px;
+  }
+  .scene-lab.is-expanded .scenario-modes button,
+  .scene-lab.is-expanded .scenario-primary,
+  .scene-lab.is-expanded .scenario-secondary,
+  .scene-lab.is-expanded .scenario-presets button,
+  .scene-lab.is-expanded .object-filters button {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .scene-lab.is-expanded input[type='range'] {
+    min-height: 32px;
+  }
+  .scene-lab.is-expanded .scene-lab-note {
+    flex: 0 0 auto;
+    display: block;
+    padding: 8px 14px;
+    border-top: 1px solid var(--line);
+  }
+  .scene-lab.is-expanded .scene-lab-note > span {
+    display: none;
+  }
+  .scene-lab.is-expanded .scene-lab-note p {
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .scene-lab.is-expanded .scene-lab-body[data-panel-collapsed='true'] {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .scene-lab.is-expanded .scene-panel-shell.is-collapsed .simulation-panel {
+    display: none;
+  }
+}
+
+@media (max-width: 920px) and (max-height: 500px) {
+  .scene-lab.is-expanded .scene-lab-heading {
+    padding-block: 4px;
+  }
+  .scene-lab.is-expanded .scene-lab-body,
+  .scene-lab.is-expanded .scene-lab-body[data-panel-collapsed='true'] {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 48%);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .scene-lab.is-expanded .scene-panel-shell {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+  .scene-lab.is-expanded .scene-panel-toggle {
+    display: none;
+  }
+  .scene-lab.is-expanded .scene-panel-shell.is-collapsed .simulation-panel {
+    display: block;
   }
 }

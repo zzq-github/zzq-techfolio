@@ -1,0 +1,63 @@
+.project-modal h2 {
+  text-wrap: balance;
+}
+
+.project-modal .case-role {
+  margin: 0;
+  padding: 16px 18px;
+  border-left: 3px solid var(--mint);
+  border-radius: 0 8px 8px 0;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+
+.project-modal .case-challenges {
+  display: grid;
+  gap: 20px;
+}
+
+.project-modal .case-challenge h4 {
+  margin: 0 0 7px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.project-modal .case-challenge p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.project-modal .case-contribution .case-deliverables li {
+  margin-block: 6px;
+  color: var(--text-secondary);
+}
+
+.project-modal .case-disclosure {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--surface-soft);
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 767px) {
+  .project-modal .case-role {
+    padding: 14px;
+  }
+
+  .project-modal .case-disclosure {
+    font-size: 14px;
+  }
+}

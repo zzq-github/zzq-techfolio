@@ -15,6 +15,12 @@ export type Project = {
   description: string
   highlights: string[]
   technologies: string[]
+  contribution?: {
+    role: string
+    challenges: { problem: string; implementation: string }[]
+    deliverables: string[]
+    disclosure: string
+  }
 }
 
 export type Experience = {
@@ -35,7 +41,6 @@ export const profile = {
   locationCode: 'CHANGSHA · 28.2282° N, 112.9388° E',
   github: 'https://github.com/zzq-github',
   email: '15096061897@163.com',
-  resumeUrl: `${import.meta.env.BASE_URL}resume.pdf`,
   summary:
     '10 年软件研发经验，专注 AI Agent、GIS 三维可视化与全栈应用开发，持续探索 AI 与空间信息技术在真实业务中的工程化落地。',
   statement: 'Building intelligent applications between AI, GIS and the real world.',
@@ -99,6 +104,27 @@ export const projects: Project[] = [
       '处理坐标系识别转换、空间范围解析，以及填挖方、工程量和运输数据标准化。',
     ],
     technologies: ['Cesium', 'SuperMap iServer', 'S3M', '3D Tiles', 'GeoJSON', 'Proj4', 'ECharts'],
+    contribution: {
+      role: '承担 Cesium 三维应用框架搭建、空间数据接入与处理，以及模型管理、量测标绘等交互开发。',
+      challenges: [
+        {
+          problem: '多源数据如何进入同一三维场景？',
+          implementation:
+            '接入 iServer、S3M、3D Tiles 与 GeoJSON，处理坐标系识别、转换和空间范围解析，完成影像、地形与工程边界数据整合。',
+        },
+        {
+          problem: '空间展示如何关联施工业务？',
+          implementation:
+            '清洗、转换并标准化填挖方、工程量与运输数据，实现影像披覆、量测标绘、模型管理与车辆运输态势展示。',
+        },
+      ],
+      deliverables: [
+        'Cesium 三维应用框架与多源数据接入。',
+        '坐标转换、空间范围解析与施工数据标准化。',
+        '模型管理、量测标绘与运输态势交互。',
+      ],
+      disclosure: '本站三维场景使用合成地形与模拟数据，仅展示交互能力，不是该项目实景或交付验收材料。',
+    },
   },
   {
     id: 'uav',
@@ -125,6 +151,27 @@ export const projects: Project[] = [
       '构建游客额度控制与图片上传、裁剪、预览、纠偏流程，支撑图像识别与试卷评分。',
     ],
     technologies: ['AI', 'WebSocket', 'Vue / Nuxt', 'Image Processing', 'MathJax'],
+    contribution: {
+      role: '负责 AI 教学工具模块架构及核心开发，覆盖流式消息连接、游客与额度控制，以及图像输入处理。',
+      challenges: [
+        {
+          problem: '多个教学工具如何共用流式消息能力？',
+          implementation:
+            '设计 WebSocket 单例连接和发布订阅消息机制，实现 AI 流式响应、自动重连及连接保活，为各教学工具提供消息交互能力。',
+        },
+        {
+          problem: '如何串联体验入口与图像输入？',
+          implementation:
+            '实现游客体验与 AI 使用额度控制，构建图片上传、裁剪、预览和纠偏流程，支撑拍照解题、图像识别与试卷评分。',
+        },
+      ],
+      deliverables: [
+        'AI 教学工具模块架构与核心功能。',
+        '流式消息连接、重连与保活机制。',
+        '游客额度控制与图像输入处理流程。',
+      ],
+      disclosure: '此处展示 AI 应用集成与交互工程经历，不代表基础模型研发；未提供生产系统或学生数据访问。',
+    },
   },
   {
     id: 'offshore-wind',
@@ -164,6 +211,27 @@ export const projects: Project[] = [
       '支持多项目并行研发与独立部署，提升系统可维护性和团队协作效率。',
     ],
     technologies: ['Vue', 'Qiankun', 'Element UI', 'Micro Frontend'],
+    contribution: {
+      role: '负责微前端主应用架构与子应用开发模板，完成基座通信、动态路由映射等核心能力。',
+      challenges: [
+        {
+          problem: '多个业务应用如何接入同一基座？',
+          implementation:
+            '基于 Vue + Qiankun 搭建主应用，完成基座与子应用通信、动态路由映射，串联不同业务应用的接入与访问。',
+        },
+        {
+          problem: '如何支持多团队并行开发？',
+          implementation:
+            '沉淀子应用开发模板，结合微前端架构支持各业务应用并行研发与独立部署，明确主应用和子应用的协作边界。',
+        },
+      ],
+      deliverables: [
+        'Vue + Qiankun 微前端主应用。',
+        '可复用的子应用开发模板。',
+        '基座通信与动态路由映射能力。',
+      ],
+      disclosure: '以上说明个人参与的架构与实现范围；本页未提供客户项目源码或生产系统访问。',
+    },
   },
 ]
 

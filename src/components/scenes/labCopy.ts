@@ -1,4 +1,8 @@
 export const labCopy: Record<string, string> = {
+  参数与对象: 'Controls & objects',
+  收起控制面板: 'Collapse controls',
+  展开控制面板: 'Expand controls',
+  场景播放与拖动: 'Scene playback and drag controls',
   可查看: 'View details',
   未检查: 'Not inspected',
   受影响: 'Affected',

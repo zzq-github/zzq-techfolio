@@ -306,12 +306,14 @@ export function createEarthworkScene(publish: PublishScene): SceneModule {
       options.mode === 'overview' ? '原始地形' : options.mode === 'analysis' ? '设计完成面' : '施工过程'
     publish({
       metrics: [
-        { label: '挖方量', value: Math.round(result.cutVolume), unit: 'm³' },
-        { label: '填方量', value: Math.round(result.fillVolume), unit: 'm³' },
-        { label: '余缺方量', value: Math.round(result.netVolume), unit: 'm³' },
-        { label: '施工完成', value: Math.round(currentFraction * 100), unit: '%' },
+        { label: '设计挖方总量', value: Math.round(result.cutVolume), unit: 'm³' },
+        { label: '设计填方总量', value: Math.round(result.fillVolume), unit: 'm³' },
+        { label: '设计余缺方量', value: Math.round(result.netVolume), unit: 'm³' },
+        ...(options.mode === 'process'
+          ? [{ label: '施工完成', value: Math.round(currentFraction * 100), unit: '%' }]
+          : [{ label: '当前显示', value: phase }]),
       ],
-      progress: Math.round(currentFraction * 100),
+      progress: options.mode === 'process' ? options.progress : undefined,
       objects: markerSpecs.map((spec, i) => ({
         id: spec.id,
         title: activeRegions[i]

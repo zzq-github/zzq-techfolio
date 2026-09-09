@@ -40,6 +40,7 @@ test('construction playback advances the actual progress and can pause and resum
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await page.goto('./#scene-lab')
   const lab = page.locator('#scene-lab')
+  await lab.getByRole('button', { name: '过程推演', exact: true }).click()
   const progress = lab.getByRole('slider', { name: '施工进度' })
   await expect(progress).toBeEnabled()
   await lab.getByRole('button', { name: '播放施工过程', exact: true }).click()

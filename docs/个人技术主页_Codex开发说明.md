@@ -32,7 +32,7 @@
 - 展示代表项目，而不是机械复制全部简历；
 - 展示工作经历时间线；
 - 展示开源项目及 GitHub 链接；
-- 支持下载 PDF 简历；
+- 以网页展示个人经历和作品，不提供 PDF 简历下载；
 - PC 和移动端均可正常浏览；
 - 支持 GitHub Pages 静态部署；
 - 页面视觉具有科技感、GIS 感和 AI 感，但不能过度炫技影响阅读。
@@ -269,13 +269,7 @@ Java / Node.js
 查看项目
 ```
 
-次按钮：
-
-```text
-下载简历
-```
-
-第三入口：
+另一个入口：
 
 ```text
 GitHub
@@ -1155,41 +1149,15 @@ Email 可从配置文件读取。
 
 因为 GitHub Pages 是公开互联网网站。
 
-如果需要手机：
-
-```text
-仅在 PDF 简历中保留。
-```
+需要进一步联系方式时，由本人私下提供，不通过本站发布个人简历文件。
 
 ---
 
-# 18. PDF 简历
+# 18. 简历文件与公开内容
 
-项目支持：
+当前站点不提供 PDF 简历查看或下载入口，工程与构建产物不包含 PDF 简历文件。
 
-```text
-public/resume.pdf
-```
-
-按钮：
-
-```text
-下载 PDF 简历
-```
-
-新窗口：
-
-```html
-target="_blank"
-```
-
-Codex 不要修改 PDF 内容。
-
-PDF 文件由开发者手动放入：
-
-```text
-public/resume.pdf
-```
+个人经历、能力和项目展示仍基于原有简历内容维护；简历作为内容来源，不作为站点公开附件。不要将个人简历文件放入公开资源目录。
 
 ---
 
@@ -1502,7 +1470,6 @@ src/config/site.ts
 ```ts
 export const siteConfig = {
   enableThreeGlobe: true,
-  enableResumeDownload: true,
   enableEmail: true,
   enablePhone: false,
   enableAnalytics: false,
@@ -1524,7 +1491,7 @@ README 必须包含：
 构建
 GitHub Pages 部署
 如何修改简历数据
-如何替换 PDF
+公开内容与个人简历文件边界
 项目结构
 ```
 
@@ -1559,7 +1526,7 @@ V1 必须完成：
 - [ ] Tech Stack
 - [ ] Education
 - [ ] Contact
-- [ ] PDF 下载
+- [ ] 不提供 PDF 简历下载入口，构建产物不包含个人简历文件
 - [ ] Framer Motion
 - [ ] 响应式
 - [ ] SEO
@@ -1623,7 +1590,7 @@ Ask My Resume
 - [ ] 工作经历时间准确
 - [ ] 开源项目链接正确
 - [ ] GIS 数据急救箱标记为商业产品而非开源
-- [ ] PDF 可访问
+- [ ] 页面无 PDF 简历入口，公开资源中无个人简历文件
 
 ## 工程
 

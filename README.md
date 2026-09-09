@@ -40,6 +40,19 @@
 - 系统开启“减少动态效果”时默认暂停；不支持 WebGL 2 或上下文丢失时显示说明和重试入口，其他项目内容仍可浏览。
 - 场景参数：`src/components/scenes/sceneData.ts`；共享渲染：`sceneEngine.ts`；独立模型与计算：`modules/`；交互组件：`SceneLab.tsx`；样式：`scenes.css` 和 `scenario.css`；各场景英文维护在 `*Copy.ts`。
 
+### 手机交互与场景状态
+
+- 手机点击“展开体验”后，上方模型保持可见，下方参数与对象列表独立滚动；控制面板可收起，横屏改为左右分区。播放、拖动开关和镜头按钮直接放在模型旁。
+- 切换场景保留本次页面会话的参数、模式、图层、选中对象和巡检复核记录；“恢复默认参数”只重置当前场景。刷新页面恢复默认，不写入长期存储；桥梁从已检查点续行，不保存帧级飞行位置或自由镜头位置。
+- 土石方的分析模式显示“设计完成面”，仅在过程推演模式显示施工进度；设计挖填总量不等同于当前已完成方量。
+- 选中对象后聚焦详情；完成病害复核后保留“已复核”按钮和焦点。展开/收起不重建 WebGL 画布。
+
+### 三个代表案例的个人贡献
+
+- 土石方、ScholarDog、统一业务开放平台详情增加“我的职责 / 关键问题与实现 / 交付内容”，中英文同步。
+- 内容来自已有开发说明和简历数据，不增加未经证实的业绩指标；本站合成演示不作为客户项目实景或交付验收材料。
+- 通过 `Project.contribution` 可选字段维护，未配置的案例保持原有详情结构。
+
 ## 语言与主题
 
 - 导航栏提供中文 / English 切换和亮色、暗色、跟随系统三种外观选项，桌面与手机均可使用。
@@ -47,7 +60,7 @@
 - 主题初始化脚本在 React 和样式加载前应用外观，避免已保存主题在首屏闪烁。选择“跟随系统”时实时响应系统配色变化，手动选择亮色或暗色时保持该选择。
 - 地球与三维画布保留深色，外围面板、按钮和弹窗随页面主题变化。切换语言或主题不重建三维场景，也不重置演示参数。
 - 英文模式覆盖简历内容、项目详情、三维提示与无障碍标签；页面语言、标题、描述及 Open Graph locale 同步更新。技术名称及装饰性英文标题保留原样。
-- PDF 仍为现有中文版本，英文入口标注 `Resume (Chinese)`。这是一套页面的语言偏好切换，没有新增独立英文 URL 或英文 PDF。
+- 这是一套页面的语言偏好切换，没有新增独立英文 URL；中英文页面均不提供 PDF 简历下载。
 
 维护入口：
 
@@ -58,7 +71,7 @@
 
 ## 本地运行
 
-环境要求：Node.js 20+、pnpm 9+。
+环境要求：Node.js 22.13+、pnpm 11.22.0。自动部署使用 Node.js 22.23.2；`package.json` 固定 pnpm 版本，确保本地与 CI 安装一致。
 
 ```bash
 pnpm install
@@ -92,7 +105,7 @@ pnpm test:e2e
 ## 换行与格式规范
 
 - 文本文件统一使用 UTF-8、LF 换行和两个空格缩进。
-- `.gitattributes` 固定 Git 检出与提交时的文本换行，避免 Windows `core.autocrlf` 导致格式检查失败；PDF 按二进制处理。
+- `.gitattributes` 固定 Git 检出与提交时的文本换行，避免 Windows `core.autocrlf` 导致格式检查失败。
 - `.editorconfig` 与 Prettier 的 `endOfLine: 'lf'` 保持一致。修改后执行 `pnpm format:check`，需要格式化时执行 `pnpm format`。
 
 ## 修改简历数据
@@ -109,15 +122,9 @@ src/data/profile.ts
 src/config/site.ts
 ```
 
-## 替换 PDF 简历
+## 简历文件与公开内容
 
-用新的 PDF 文件覆盖：
-
-```text
-public/resume.pdf
-```
-
-页面中的“下载简历”按钮会在新窗口打开该文件。公开版本不应在页面正文展示手机号码。
+当前站点不提供 PDF 简历查看或下载入口，工程与构建产物不包含 PDF 简历文件。个人经历和项目内容仍通过数据文件维护；不要将个人简历文件放入公开资源目录。公开版本不应在页面正文展示手机号码。
 
 ## 项目结构
 
@@ -146,13 +153,21 @@ src/
 目标仓库为 `zzq-github/zzq-techfolio`，目标发布地址为 `https://zzq-github.github.io/zzq-techfolio/`。
 
 - Vite `base` 统一设为 `/zzq-techfolio/`，本地开发、生产构建和预览均使用该路径。
-- React 中的 PDF 简历与地理数据通过 `import.meta.env.BASE_URL` 拼接地址；新增运行时 `public/` 资源引用时也应遵循此约定。
+- React 中的地理数据通过 `import.meta.env.BASE_URL` 拼接地址；新增运行时 `public/` 资源引用时也应遵循此约定。
 - HTML 中的 favicon 和主题初始化脚本分别引用 `/favicon-3d.png`、`/preferences.js`，由 Vite 自动添加 `base` 前缀；这些资源属性不要再手工添加 `%BASE_URL%`，以免开发环境出现重复前缀。
 - 3D Logo 原图为 `public/brand-logo-3d.png`；导航栏使用透明背景的 `brand-logo-3d-144.png`（约 32 KB），浏览器图标使用 `favicon-3d.png`（64 × 64，约 8 KB）。
 - `index.html` 的 canonical 与 Open Graph URL 指向目标发布地址。
 - 若迁移到用户主页仓库或自定义域名，需要同步调整 `vite.config.ts` 的 `base` 和 `index.html` 的 canonical、Open Graph URL。
 
-当前仅完成发布路径适配，尚未配置 GitHub Actions / GitHub Pages 自动部署，也未进行线上发布。
+### GitHub Pages 自动部署
+
+- 发布分支为 `main`，工作流位于 `.github/workflows/deploy-pages.yml`。推送到 `main` 后自动执行，也可在 Actions 页面手动运行；面向 `main` 的 Pull Request 仅执行检查，不发布。
+- 工作流使用锁文件安装依赖，执行 Lint、格式检查和 Playwright 浏览器回归。测试会先运行 TypeScript 检查与 Vite 生产构建，再启动预览验证；只有全部通过才上传 `dist/` 并部署。
+- 部署仅使用 `dist/`，不上传源码、开发文档或测试报告；另有检查确保已移除的简历 PDF 不会进入发布产物。`dist/` 仍不提交到 Git，也不需要单独维护 `gh-pages` 产物分支。
+- 首次启用时，在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。此设置需要仓库管理权限；工作流使用内置 `GITHUB_TOKEN`，无需额外配置个人令牌。
+- Actions 中的 `Build and deploy GitHub Pages` 工作流显示部署成功后，即可访问上述站点地址；`github-pages` 环境记录每次部署对应的提交。失败时查看失败步骤日志，修复后重新推送或重新运行。
+- Actions 均固定到具体提交，构建仅有源码只读权限；仅部署任务获得 Pages 写入与 OIDC 身份权限。更新 Action 版本时需同步校验并更新固定提交。
+- 删除当前 PDF 不会自动移除 Git 历史里的旧文件；公开源码前仍需单独评估历史内容，不要把部署网站等同于清理仓库历史。
 
 ## 作品展示与交互维护
 

@@ -9,6 +9,8 @@ export interface SceneOptions {
   showOriginal: boolean
   selectedId: string | null
   reviewedIds: string[]
+  /** Restores discovered inspection records when a scene's WebGL instance is recreated. */
+  discoveredIds?: string[]
   showBuildings: boolean
   showRoads: boolean
   showGreenery: boolean

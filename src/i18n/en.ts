@@ -18,6 +18,50 @@ export const en: Record<string, string> = {
   关联实践: 'RELATED WORK',
   业务场景: 'Business context',
   技术路径: 'Technical approach',
+  我的职责: 'My role',
+  关键问题与实现: 'Challenges and implementation',
+  交付内容: 'Deliverables',
+  '承担 Cesium 三维应用框架搭建、空间数据接入与处理，以及模型管理、量测标绘等交互开发。':
+    'Built the Cesium 3D application framework, integrated and processed spatial data, and developed interactions for model management, measurement and annotation.',
+  '多源数据如何进入同一三维场景？': 'How can multiple data sources share one 3D scene?',
+  '接入 iServer、S3M、3D Tiles 与 GeoJSON，处理坐标系识别、转换和空间范围解析，完成影像、地形与工程边界数据整合。':
+    'Integrated iServer, S3M, 3D Tiles and GeoJSON, with coordinate system identification, transformation and extent parsing to bring imagery, terrain and engineering boundaries together.',
+  '空间展示如何关联施工业务？': 'How can spatial views connect with construction workflows?',
+  '清洗、转换并标准化填挖方、工程量与运输数据，实现影像披覆、量测标绘、模型管理与车辆运输态势展示。':
+    'Cleaned, transformed and standardized cut-and-fill, quantity and transport data, and implemented imagery draping, measurement, annotation, model management and transport visualization.',
+  'Cesium 三维应用框架与多源数据接入。': 'Cesium application framework and multi-source data integration.',
+  '坐标转换、空间范围解析与施工数据标准化。':
+    'Coordinate transformation, spatial extent parsing and construction data standardization.',
+  '模型管理、量测标绘与运输态势交互。':
+    'Interactions for model management, measurement, annotation and transport visualization.',
+  '本站三维场景使用合成地形与模拟数据，仅展示交互能力，不是该项目实景或交付验收材料。':
+    'The 3D scene on this site uses synthetic terrain and simulated data to demonstrate interaction. It is not footage or acceptance evidence from the actual project.',
+  '负责 AI 教学工具模块架构及核心开发，覆盖流式消息连接、游客与额度控制，以及图像输入处理。':
+    'Owned the architecture and core development of AI teaching tool modules, including streaming connections, guest access and usage limits, and image input processing.',
+  '多个教学工具如何共用流式消息能力？': 'How can multiple teaching tools share streaming capabilities?',
+  '设计 WebSocket 单例连接和发布订阅消息机制，实现 AI 流式响应、自动重连及连接保活，为各教学工具提供消息交互能力。':
+    'Designed a singleton WebSocket connection and publish-subscribe messaging with streamed AI responses, automatic reconnection and keep-alive support for teaching tools.',
+  '如何串联体验入口与图像输入？': 'How can guest access and image input form a usable workflow?',
+  '实现游客体验与 AI 使用额度控制，构建图片上传、裁剪、预览和纠偏流程，支撑拍照解题、图像识别与试卷评分。':
+    'Implemented guest access and AI usage limits, with image upload, cropping, preview and correction workflows supporting photo-based questions, image recognition and exam grading.',
+  'AI 教学工具模块架构与核心功能。': 'AI teaching tool module architecture and core features.',
+  '流式消息连接、重连与保活机制。': 'Streaming connections, reconnection and keep-alive mechanisms.',
+  '游客额度控制与图像输入处理流程。': 'Guest usage limits and image input workflows.',
+  '此处展示 AI 应用集成与交互工程经历，不代表基础模型研发；未提供生产系统或学生数据访问。':
+    'This case describes AI application integration and interaction engineering, not foundation model research. No production system or student data access is provided.',
+  '负责微前端主应用架构与子应用开发模板，完成基座通信、动态路由映射等核心能力。':
+    'Built the micro-frontend host architecture and sub-application templates, including host communication and dynamic route mapping.',
+  '多个业务应用如何接入同一基座？': 'How can multiple business applications share one host?',
+  '基于 Vue + Qiankun 搭建主应用，完成基座与子应用通信、动态路由映射，串联不同业务应用的接入与访问。':
+    'Built the host with Vue and Qiankun, implementing host-to-sub-application communication and dynamic route mapping to integrate and navigate between business applications.',
+  '如何支持多团队并行开发？': 'How can multiple teams develop in parallel?',
+  '沉淀子应用开发模板，结合微前端架构支持各业务应用并行研发与独立部署，明确主应用和子应用的协作边界。':
+    'Created reusable sub-application templates within a micro-frontend architecture, supporting parallel development and independent deployment with defined host and sub-application boundaries.',
+  'Vue + Qiankun 微前端主应用。': 'Vue and Qiankun micro-frontend host application.',
+  '可复用的子应用开发模板。': 'Reusable sub-application development templates.',
+  '基座通信与动态路由映射能力。': 'Host communication and dynamic route mapping.',
+  '以上说明个人参与的架构与实现范围；本页未提供客户项目源码或生产系统访问。':
+    'This describes my architecture and implementation contributions. Client source code and production system access are not provided on this page.',
   在三维场景中探索: 'Explore the spatial concept',
   更多工程实践: 'More engineering work',
   '{name}概念三维场景预览': 'Conceptual 3D scene preview for {name}',
@@ -46,8 +90,6 @@ export const en: Record<string, string> = {
   '{name}演示参数': '{name} demo parameters',
   '产品流程：{steps}': 'Product workflow: {steps}',
   探索我的项目: 'Explore my work',
-  '在新窗口打开 PDF 简历': 'Open the PDF resume in a new tab (Chinese)',
-  下载简历: 'Resume (Chinese)',
   '在新窗口打开 GitHub': 'Open GitHub in a new tab',
   '，中国': ', China',
   '10 年工程经验': '10 years of engineering',

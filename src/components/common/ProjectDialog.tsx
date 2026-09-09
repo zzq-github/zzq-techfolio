@@ -5,6 +5,7 @@ import { useContent } from '../../i18n/useContent'
 import type { Project } from '../../data/profile'
 import { isSceneKind, type SceneKind } from '../scenes/sceneData'
 import { TechTag } from './TechTag'
+import './project-contributions.css'
 
 export function ProjectDialog({
   project,
@@ -18,6 +19,7 @@ export function ProjectDialog({
   const { t } = usePreferences()
   const { projectPresentation } = useContent()
   const presentation = projectPresentation[project.id]
+  const contribution = project.contribution
   const dialog = useRef<HTMLDialogElement>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const closingRef = useRef(false)
@@ -84,20 +86,58 @@ export function ProjectDialog({
           {project.description}
         </p>
       </div>
+      {contribution ? (
+        <>
+          <section className="modal-section case-contribution" aria-labelledby="case-role-heading">
+            <h3 id="case-role-heading">
+              <span>02</span>
+              {t('我的职责')}
+            </h3>
+            <p className="case-role">{contribution.role}</p>
+          </section>
+          <section className="modal-section case-contribution" aria-labelledby="case-challenges-heading">
+            <h3 id="case-challenges-heading">
+              <span>03</span>
+              {t('关键问题与实现')}
+            </h3>
+            <div className="case-challenges">
+              {contribution.challenges.map((challenge) => (
+                <div className="case-challenge" key={challenge.problem}>
+                  <h4>{challenge.problem}</h4>
+                  <p>{challenge.implementation}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section className="modal-section case-contribution" aria-labelledby="case-deliverables-heading">
+            <h3 id="case-deliverables-heading">
+              <span>04</span>
+              {t('交付内容')}
+            </h3>
+            <ul className="case-deliverables">
+              {contribution.deliverables.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <p className="case-disclosure">{contribution.disclosure}</p>
+          </section>
+        </>
+      ) : (
+        <div className="modal-section">
+          <h3>
+            <span>02</span>
+            {t('核心工作')}
+          </h3>
+          <ul>
+            {project.highlights.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="modal-section">
         <h3>
-          <span>02</span>
-          {t('核心工作')}
-        </h3>
-        <ul>
-          {project.highlights.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="modal-section">
-        <h3>
-          <span>03</span>
+          <span>{contribution ? '05' : '03'}</span>
           {t('技术路径')}
         </h3>
         <ol className="case-workflow">
