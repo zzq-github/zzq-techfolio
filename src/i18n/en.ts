@@ -1,5 +1,35 @@
+import { labCopy } from '../components/scenes/labCopy'
+import { earthworkCopy } from '../components/scenes/modules/earthworkCopy'
+import { waterCopy } from '../components/scenes/modules/waterCopy'
+import { bridgeCopy } from '../components/scenes/modules/bridgeCopy'
+import { campusCopy } from '../components/scenes/modules/campusCopy'
+
 // Chinese is the source language. Brand names and technology identifiers stay unchanged.
 export const en: Record<string, string> = {
+  选择公式示例: 'Choose a formula example',
+  积分: 'Integral',
+  欧拉恒等式: 'Euler identity',
+  '从零到一对 x 的平方积分等于三分之一': 'The integral of x squared from zero to one equals one third',
+  'e 的 i π 次方加一等于零': 'e to the power of i pi plus one equals zero',
+  '公式示例 · LaTeX': 'FORMULA EXAMPLES / LATEX',
+  '本地开发 · 快速启动': 'LOCAL DEVELOPMENT / QUICK START',
+  '打开{name}在线演示': 'Open the live demo of {name}',
+
+  关联实践: 'RELATED WORK',
+  业务场景: 'Business context',
+  技术路径: 'Technical approach',
+  在三维场景中探索: 'Explore the spatial concept',
+  更多工程实践: 'More engineering work',
+  '{name}概念三维场景预览': 'Conceptual 3D scene preview for {name}',
+  '{name}演示页面预览': 'Demo page preview for {name}',
+  演示页面截图: 'DEMO PAGE PREVIEW',
+  复制邮箱: 'Copy email',
+  已复制: 'Copied',
+  '邮箱已复制，可以粘贴到邮件应用。': 'Email copied. Paste it into your email app.',
+  '暂时无法复制，请选择邮箱地址手动复制，或点击发送邮件。':
+    'Copy unavailable. Select the address to copy manually, or use Send an email.',
+  恢复默认参数: 'Reset parameter',
+
   返回顶部: 'Back to top',
   查看源码: 'View GitHub',
   在线演示: 'Live demo',
@@ -242,6 +272,11 @@ export const en: Record<string, string> = {
     'An open-source admin framework built with React, TypeScript, Vite and Ant Design, featuring dynamic routes, menu and button permissions, authentication, mocks, CRUD, backend adapters, testing and CI/CD.',
   '基于 MathJax 开发并维护 Vue 3 / React 双版本数学公式组件库，支持 LaTeX 公式渲染、编辑和组件化集成，已完成 NPM 发布及持续版本维护。':
     'Maintain Vue 3 and React math component libraries built on MathJax, supporting LaTeX rendering, editing and component integration, published on NPM with ongoing maintenance.',
+  地球展示控制: 'Globe display controls',
+  数字地球: 'DIGITAL EARTH',
+  暂停地球动画: 'Pause globe animation',
+  继续地球动画: 'Resume globe animation',
+  重置地球视角: 'Reset globe view',
   'GIS 数据急救箱': 'GIS Data First Aid Kit',
   '面向 GIS 数据交付中的坐标系错误、数据偏移、格式兼容等高频问题，独立设计并开发桌面诊断与修复工具。':
     'An independently designed desktop diagnosis and repair tool for recurring GIS delivery issues such as incorrect coordinate systems, data offsets and format compatibility.',
@@ -260,4 +295,9 @@ export const en: Record<string, string> = {
   '软件工程 · 本科': "Software Engineering · Bachelor's degree",
   '周志强个人技术主页，10年软件研发经验，专注 AI Agent、GIS 三维可视化、Cesium、SuperMap、React、Vue 与全栈应用开发。':
     'Zhou Zhiqiang’s portfolio. 10 years of software engineering in AI agents, 3D GIS, Cesium, SuperMap, React, Vue and full-stack applications.',
+  ...labCopy,
+  ...earthworkCopy,
+  ...waterCopy,
+  ...bridgeCopy,
+  ...campusCopy,
 }

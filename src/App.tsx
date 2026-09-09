@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
 import { Hero } from './components/hero/Hero'
@@ -12,6 +13,17 @@ import { Skills } from './components/sections/Skills'
 import { TechStack } from './components/sections/TechStack'
 
 export default function App() {
+  useEffect(() => {
+    // The browser may resolve the initial fragment before React creates its target.
+    const id = window.location.hash.slice(1)
+    if (!id) return
+    const frame = requestAnimationFrame(() => {
+      const target = document.getElementById(id)
+      target?.scrollIntoView({ behavior: 'instant', block: 'start' })
+      if (target?.hasAttribute('tabindex')) target.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [])
   return (
     <>
       <Header />

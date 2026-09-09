@@ -1,0 +1,605 @@
+/* The inline lab becomes the same native dialog when expanded, preserving WebGL state. */
+dialog.scene-lab {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0 0 40px;
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+}
+dialog.scene-lab[open] {
+  display: block;
+}
+body.scene-expanded {
+  overflow: hidden;
+}
+dialog.scene-lab.is-expanded {
+  position: fixed;
+  inset: 16px;
+  width: calc(100% - 32px);
+  max-width: 1600px;
+  height: calc(100dvh - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  box-shadow: 0 24px 120px #0009;
+}
+.scene-lab::backdrop {
+  background: #020b13bf;
+  backdrop-filter: blur(12px);
+}
+.scene-lab.is-expanded .scene-lab-heading {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.scene-lab .scene-lab-heading {
+  padding: 22px 24px;
+}
+.scene-lab .scene-heading-actions {
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.scene-lab .scene-expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--text);
+  background: var(--surface-soft);
+}
+.scene-lab .scene-selector {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-inline: 12px;
+}
+.scene-lab .scene-selector button {
+  gap: 8px;
+  font-size: 12px;
+  min-width: 0;
+}
+.scene-lab .scene-selector button small {
+  margin-left: 0;
+}
+.scene-lab .scene-lab-body {
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+.scene-lab .simulation-stage {
+  height: 660px;
+  min-height: 0;
+}
+.scene-lab .simulation-panel {
+  max-height: 660px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  padding: 24px;
+  background: var(--surface);
+}
+.scene-lab .simulation-panel h4 {
+  font-size: 21px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.scene-lab .simulation-kicker {
+  margin-bottom: 12px;
+}
+.scene-lab .simulation-description {
+  margin-bottom: 18px;
+  color: var(--muted);
+}
+.scene-lab .simulation-canvas canvas {
+  pointer-events: auto;
+  touch-action: pan-y;
+  cursor: pointer;
+}
+.scene-lab .simulation-canvas.is-interactive canvas {
+  touch-action: none;
+  cursor: grab;
+}
+.scene-lab .simulation-canvas.is-interactive canvas:active {
+  cursor: grabbing;
+}
+.scene-lab .scene-event {
+  position: absolute;
+  top: 54px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: fit-content;
+  max-width: calc(100% - 44px);
+  padding: 8px 11px;
+  border: 1px solid #71b6b629;
+  border-radius: 6px;
+  background: #091923d9;
+  color: #a7c9d0;
+  font-size: 11px;
+  line-height: 1.7;
+  pointer-events: none;
+}
+.scene-event .status-dot {
+  flex: 0 0 5px;
+  margin-top: 7px;
+}
+.scene-lab .scene-selection-label {
+  position: absolute;
+  left: 22px;
+  bottom: 78px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 10px 8px 14px;
+  border: 1px solid #78ead673;
+  border-radius: 7px;
+  background: #0b242ced;
+  color: #b6f3e6;
+  font-size: 12px;
+}
+.scene-selection-label button {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  min-height: 30px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+.scene-lab .scenario-modes,
+.scene-lab .scenario-presets,
+.scene-lab .object-filters {
+  display: flex;
+  gap: 4px;
+}
+.scene-lab .scenario-modes {
+  margin-bottom: 22px;
+  padding: 4px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.scene-lab .scenario-modes button,
+.scene-lab .scenario-presets button,
+.scene-lab .object-filters button {
+  flex: 1;
+  min-height: 34px;
+  padding: 6px 4px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.scene-lab .scenario-modes button[aria-pressed='true'],
+.scene-lab .scenario-presets button[aria-pressed='true'],
+.scene-lab .object-filters button[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--mint) 9%, var(--surface));
+  color: var(--mint);
+  border-color: color-mix(in srgb, var(--mint) 24%, transparent);
+}
+.scene-lab .scenario-presets {
+  margin-top: 12px;
+}
+.scene-lab .scenario-presets button {
+  border-color: var(--line);
+}
+.scene-lab .scenario-progress,
+.scene-lab .inspection-actions {
+  margin-top: 20px;
+}
+.scene-lab .scenario-progress label,
+.scene-lab .inspection-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.scenario-progress output,
+.inspection-progress strong {
+  font: 12px var(--mono);
+  color: var(--mint);
+}
+.scene-lab .scenario-progress input {
+  width: 100%;
+  margin: 10px 0;
+  height: 22px;
+  accent-color: var(--mint);
+}
+.scene-lab .inspection-actions progress {
+  display: block;
+  width: 100%;
+  height: 5px;
+  margin: 12px 0 16px;
+  border: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  accent-color: var(--mint);
+}
+.inspection-actions progress::-webkit-progress-bar {
+  background: var(--line);
+}
+.inspection-actions progress::-webkit-progress-value {
+  background: var(--mint);
+}
+.scene-lab .scenario-primary,
+.scene-lab .scenario-secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 38px;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--mint) 28%, transparent);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--mint) 10%, var(--surface));
+  color: var(--mint);
+  font-size: 12px;
+}
+.scene-lab .scenario-secondary {
+  margin-top: 7px;
+  background: transparent;
+  border-color: var(--line);
+  color: var(--muted);
+}
+.scene-lab .scenario-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.scene-lab .scenario-layers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+  padding: 14px;
+  margin: 22px 0 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.scenario-layers legend {
+  font-size: 11px;
+  padding-inline: 6px;
+  color: var(--muted);
+}
+.scenario-layers label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+}
+.scene-lab input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--mint);
+  margin: 0;
+}
+.scene-lab .scene-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 23px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--line);
+}
+.scene-metrics > div {
+  padding: 14px 11px;
+  background: var(--surface-soft);
+  min-width: 0;
+}
+.scene-metrics > div:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.scene-metrics > div > span {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.scene-metrics strong {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  font: 19px var(--mono);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.scene-metrics small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.scene-object-section {
+  margin-top: 24px;
+}
+.scene-object-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.scene-object-heading h5,
+.scene-object-detail h5 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 550;
+}
+.scene-object-heading > span {
+  font: 10px var(--mono);
+  color: var(--muted);
+}
+.scene-lab .object-filters {
+  margin-bottom: 9px;
+}
+.scene-object-list {
+  display: grid;
+  gap: 6px;
+}
+.scene-lab .scene-object {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-soft);
+  color: var(--text);
+}
+.scene-object > span {
+  min-width: 0;
+}
+.scene-object strong {
+  display: block;
+  font-size: 11px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.scene-object small {
+  display: block;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.scene-object em {
+  flex-shrink: 0;
+  font-style: normal;
+  font-size: 9px;
+  color: var(--muted);
+}
+.scene-lab .scene-object[aria-pressed='true'] {
+  border-color: var(--mint);
+  background: color-mix(in srgb, var(--mint) 6%, var(--surface));
+}
+.scene-lab .scene-object.is-pending em,
+.scene-lab .scene-object.is-affected em {
+  color: #efc48d;
+}
+:root[data-theme='light'] .scene-lab .scene-object:is(.is-pending, .is-affected) em {
+  color: #925a19;
+}
+:root[data-theme='light'] .scene-lab .simulation-legend .legend-red {
+  background: #bf6656;
+}
+.scene-lab .scene-object.is-reviewed em {
+  color: var(--mint);
+}
+.scene-lab .scene-object:disabled {
+  opacity: 0.62;
+}
+.scene-empty {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.scene-object-detail {
+  margin-top: 16px;
+  border-left: 2px solid var(--mint);
+  background: var(--surface-soft);
+  padding: 16px 14px;
+  border-radius: 0 8px 8px 0;
+}
+.scene-object-detail dl {
+  margin: 14px 0 0;
+}
+.scene-object-detail dl > div {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 9px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.scene-object-detail dt {
+  color: var(--muted);
+}
+.scene-object-detail dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.scene-object-detail .scenario-primary {
+  margin-top: 16px;
+}
+.scene-lab .parameter-reset {
+  margin: 14px 0 0;
+}
+.scene-lab .simulation-controls {
+  margin-top: 10px;
+}
+.scene-lab .simulation-hint {
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.scene-lab .simulation-legend {
+  color: var(--muted);
+}
+.scene-lab .simulation-legend .legend-red {
+  background: #ed887b;
+}
+.scene-lab .scene-lab-note p {
+  color: var(--muted);
+}
+.scene-lab .scene-lab-note {
+  background: var(--surface-soft);
+}
+.scene-lab .scene-lab-note > span {
+  color: var(--mint);
+}
+.scene-lab button {
+  cursor: pointer;
+}
+.scene-lab button:focus-visible,
+.scene-lab input:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+.scene-lab .scenario-primary:hover:not(:disabled),
+.scene-lab .scene-object:hover:not(:disabled) {
+  border-color: var(--mint);
+}
+.scene-lab.is-expanded .simulation-stage {
+  height: max(420px, calc(100dvh - 240px));
+}
+.scene-lab.is-expanded .simulation-panel {
+  max-height: max(420px, calc(100dvh - 240px));
+}
+.campus-callout {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px;
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(105deg, color-mix(in srgb, var(--mint) 5%, var(--surface)), var(--surface));
+}
+.campus-callout h3 {
+  font-size: 18px;
+  margin: 7px 0 9px;
+  font-weight: 550;
+}
+.campus-callout p {
+  margin: 0;
+  max-width: 640px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.campus-callout .project-scene-link {
+  flex-shrink: 0;
+  margin: 0;
+}
+.campus-callout .card-kicker {
+  font: 10px var(--mono);
+  letter-spacing: 1px;
+  color: var(--mint);
+}
+@media (max-width: 1050px) {
+  .scene-lab .scene-lab-body {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+  .scene-lab .simulation-panel {
+    padding: 20px;
+  }
+  .scene-lab .scene-selector button small {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .scene-lab .scene-lab-heading {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+  .scene-lab .scene-lab-heading > div {
+    gap: 10px;
+  }
+  .scene-lab .scene-heading-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .scene-lab .scene-selector {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 6px;
+  }
+  .scene-lab .scene-selector button {
+    justify-content: center;
+    padding: 13px 5px;
+    gap: 6px;
+    font-size: 11px;
+  }
+  .scene-lab .scene-selector svg {
+    width: 15px;
+    flex-shrink: 0;
+  }
+  .scene-lab .scene-lab-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .scene-lab .simulation-stage,
+  .scene-lab.is-expanded .simulation-stage {
+    height: 380px;
+  }
+  .scene-lab .simulation-panel,
+  .scene-lab.is-expanded .simulation-panel {
+    max-height: none;
+    overflow: visible;
+    padding: 24px 20px;
+  }
+  .scene-lab .scene-event {
+    top: 44px;
+    left: 14px;
+    right: 14px;
+    max-width: calc(100% - 28px);
+    font-size: 10px;
+  }
+  .scene-lab .scene-selection-label {
+    left: 14px;
+    bottom: 105px;
+    font-size: 11px;
+  }
+  .scene-lab .scene-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .scene-lab .scenario-modes button,
+  .scene-lab .scenario-presets button,
+  .scene-lab .object-filters button {
+    min-height: 40px;
+  }
+  dialog.scene-lab.is-expanded {
+    inset: 8px;
+    width: calc(100% - 16px);
+    height: calc(100dvh - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+  .campus-callout {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-lab .scene-lab-body {
+    animation: none;
+  }
+}

@@ -1,6 +1,6 @@
 import { usePreferences } from '../../preferences/context'
 import { useContent } from '../../i18n/useContent'
-import { ArrowRight, Wrench } from 'lucide-react'
+import { Wrench } from 'lucide-react'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
 import { TechTag } from '../common/TechTag'
@@ -38,10 +38,13 @@ export function Product() {
             aria-label={t('产品流程：{steps}', { steps: product.flow.join(' → ') })}
           >
             {product.flow.map((step, index) => (
-              <span key={step}>
-                {step}
-                {index < product.flow.length - 1 && <ArrowRight size={15} aria-hidden="true" />}
-              </span>
+              <div className="product-step" key={step}>
+                <span className="product-step-number">0{index + 1}</span>
+                <div>
+                  <strong>{step}</strong>
+                  <small>{product.features[[0, 3, 4, 6][index]]}</small>
+                </div>
+              </div>
             ))}
           </div>
         </article>

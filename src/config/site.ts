@@ -1,5 +1,5 @@
 export const siteConfig = {
-  enableThreeGlobe: false,
+  enableThreeGlobe: true,
   enableResumeDownload: true,
   enableEmail: true,
   enablePhone: false,

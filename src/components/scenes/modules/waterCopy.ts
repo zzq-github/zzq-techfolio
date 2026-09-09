@@ -1,0 +1,33 @@
+export const waterCopy: Record<string, string> = {
+  沿岸泵房: 'Riverside pump house',
+  沿岸管理站: 'Riverside management station',
+  下游值守点: 'Downstream observation post',
+  泵站设施: 'Pumping facility',
+  管理设施: 'Management facility',
+  下游设施: 'Downstream facility',
+  场景状态: 'Scene status',
+  '已受淹 · 需要关注': 'Inundated · attention required',
+  未受淹: 'Not inundated',
+  首层高程: 'Ground-floor elevation',
+  分析水位: 'Analysis water level',
+  首层水深: 'Ground-floor water depth',
+  水源连通: 'Source connectivity',
+  已连通: 'Connected',
+  未连通: 'Disconnected',
+  对象来源: 'Object source',
+  程序化示例建筑: 'Procedural example building',
+  '隔离洼地 · 连通性验证': 'Isolated basin · connectivity check',
+  '山脊阻隔 / 独立低洼区': 'Ridge barrier / isolated depression',
+  洼地高程: 'Basin elevation',
+  分析说明: 'Analysis note',
+  '低于水位但与水源隔离，因此保持干燥。':
+    'Below the water level but disconnected from the source, so it remains dry.',
+  当前水位: 'Current water level',
+  淹没面积: 'Inundated area',
+  最大水深: 'Maximum depth',
+  受影响建筑: 'Affected buildings',
+  '静态水位分析 · 坝顶 26 m，当前水体受坝体阻隔；隔离洼地保持干燥。':
+    'Static water-level analysis · the 26 m dam crest blocks connectivity; the isolated basin stays dry.',
+  '静态水位分析 · 水位超过 26 m 坝顶，上下游已连通；不计算流速或洪峰到达时间。':
+    'Static water-level analysis · water exceeds the 26 m dam crest and connects upstream and downstream; flow velocity and flood arrival time are not calculated.',
+}

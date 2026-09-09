@@ -1,15 +1,16 @@
 import { usePreferences } from '../../preferences/context'
 import { useContent } from '../../i18n/useContent'
-import { Braces, BrainCircuit, Database, Orbit } from 'lucide-react'
+import { ArrowUpRight, Braces, BrainCircuit, Database, Orbit } from 'lucide-react'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
 import { TechTag } from '../common/TechTag'
 
 const icons = [BrainCircuit, Orbit, Braces, Database]
+const relatedProjects = ['scholardog', 'earthwork', 'micro-frontend', 'uav']
 
 export function Skills() {
   const { t } = usePreferences()
-  const { skills } = useContent()
+  const { skills, projects } = useContent()
   return (
     <section className="section" id="skills">
       <Reveal>
@@ -23,8 +24,9 @@ export function Skills() {
       <div className="skills-grid">
         {skills.map((skill, index) => {
           const Icon = icons[index]
+          const related = projects.find((project) => project.id === relatedProjects[index])!
           return (
-            <Reveal key={skill.id}>
+            <Reveal key={skill.id} delay={(index % 2) * 0.06}>
               <article className={`skill-card skill-${skill.id}`}>
                 <div className="card-topline">
                   <span>{skill.number}</span>
@@ -38,6 +40,13 @@ export function Skills() {
                     <TechTag key={keyword}>{keyword}</TechTag>
                   ))}
                 </div>
+                <a className="skill-project-link" href={`#project-${related.id}`}>
+                  <span>
+                    {t('关联实践')}
+                    <strong>{related.name}</strong>
+                  </span>
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
               </article>
             </Reveal>
           )

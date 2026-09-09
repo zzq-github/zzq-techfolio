@@ -3,6 +3,7 @@ import { useContent } from '../../i18n/useContent'
 import { ArrowUpRight, CodeXml, Mail, MapPin } from 'lucide-react'
 import { siteConfig } from '../../config/site'
 import { Reveal } from '../common/Reveal'
+import { CopyEmail } from '../common/CopyEmail'
 
 export function Contact() {
   const { t } = usePreferences()
@@ -27,6 +28,7 @@ export function Contact() {
             <CodeXml size={18} aria-hidden="true" /> GitHub <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
+        {siteConfig.enableEmail && <CopyEmail email={profile.email} />}
         <div className="contact-location">
           <MapPin size={16} aria-hidden="true" /> {profile.location} · {t('中国')}
         </div>

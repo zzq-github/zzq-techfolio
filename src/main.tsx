@@ -4,6 +4,8 @@ import App from './App'
 import './index.css'
 import { PreferencesProvider } from './preferences/PreferencesProvider'
 import './themes.css'
+import './refinement.css'
+import './atmosphere.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

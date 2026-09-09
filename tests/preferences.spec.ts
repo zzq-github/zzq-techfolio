@@ -36,10 +36,10 @@ test('language covers the whole page, project dialogs and all scene descriptions
     await page.keyboard.press('Escape')
     await expect(details.nth(i)).toBeFocused()
   }
-  for (const name of ['Earthworks', 'Bridge inspection', 'Offshore wind', 'Water twin']) {
+  for (const name of ['Earthworks', 'Bridge inspection', 'Offshore wind', 'Water twin', 'Campus']) {
     await page
       .locator('.scene-selector')
-      .getByRole('button', { name: new RegExp(name) })
+      .getByRole('button', { name: new RegExp(name, 'i') })
       .click()
     expect(await page.locator('.scene-lab').innerText()).not.toMatch(/[\u3400-\u9fff]/)
   }
@@ -128,7 +128,9 @@ test('both languages and appearances fit mobile, tablet and desktop layouts', as
       if (language === 'en') await page.getByRole('button', { name: 'Switch to English' }).click()
       for (const theme of ['light', 'dark']) {
         await page.getByRole('combobox').selectOption(theme)
-        const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+        )
         expect(overflow, `${width}px / ${language} / ${theme}`).toBe(false)
         const controls = page.locator('.preference-controls')
         const box = await controls.boundingBox()
@@ -162,7 +164,7 @@ test('published resource URLs have one base prefix and return their actual files
     expect(response.ok()).toBe(true)
     expect(response.headers()['content-type']).not.toContain('text/html')
   }
-  for (const asset of ['resume.pdf', 'data/land-110m.geojson']) {
+  for (const asset of ['resume.pdf', 'data/land-110m.geojson', 'atmosphere/terrain.svg']) {
     const response = await request.get('/zzq-techfolio/' + asset)
     expect(response.ok()).toBe(true)
     expect(await response.body()).toEqual(fs.readFileSync('public/' + asset))

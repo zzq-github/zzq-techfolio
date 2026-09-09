@@ -1,7 +1,8 @@
 import { usePreferences } from '../../preferences/context'
 import { useContent } from '../../i18n/useContent'
 import { ArrowDown, ArrowUpRight, CodeXml, FileDown, MapPin, ScanLine } from 'lucide-react'
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { siteConfig } from '../../config/site'
 import type { PointerEvent } from 'react'
 import { GeoGlobe } from './GeoGlobe'
@@ -9,27 +10,21 @@ import { GeoGlobe } from './GeoGlobe'
 export function Hero() {
   const { t } = usePreferences()
   const { profile } = useContent()
-  const reduced = useReducedMotion()
+  const reduced = useMotionPreference()
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const moveX = useSpring(x, { stiffness: 70, damping: 22 })
   const moveY = useSpring(y, { stiffness: 70, damping: 22 })
+  const rearX = useTransform(moveX, (value) => value * -0.55)
+  const rearY = useTransform(moveY, (value) => value * -0.55)
   const moveScene = (event: PointerEvent<HTMLElement>) => {
     if (reduced || event.pointerType !== 'mouse') return
     const bounds = event.currentTarget.getBoundingClientRect()
-    x.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 18)
-    y.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 14)
+    x.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 10)
+    y.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 8)
   }
   return (
-    <section
-      className="hero"
-      id="home"
-      onPointerMove={moveScene}
-      onPointerLeave={() => {
-        x.set(0)
-        y.set(0)
-      }}
-    >
+    <section className="hero" id="home">
       <div className="hero-topline" aria-hidden="true">
         <span>PERSONAL PORTFOLIO / 2026</span>
         <span>
@@ -74,13 +69,13 @@ export function Hero() {
             </a>
           )}
           <a
-            className="button icon-button"
+            className="button hero-github"
             href={profile.github}
             target="_blank"
             rel="noreferrer"
             aria-label={t('在新窗口打开 GitHub')}
           >
-            <CodeXml size={19} aria-hidden="true" />
+            <CodeXml size={17} aria-hidden="true" /> <span>GitHub</span>
           </a>
         </div>
         <div className="hero-footnote">
@@ -90,30 +85,44 @@ export function Hero() {
       </motion.div>
       <motion.div
         className="spatial-scene"
-        style={{ x: reduced ? 0 : moveX, y: reduced ? 0 : moveY }}
-        aria-hidden="true"
+        initial={reduced ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.1 }}
+        onPointerMove={moveScene}
+        onPointerLeave={() => {
+          x.set(0)
+          y.set(0)
+        }}
       >
         <GeoGlobe />
-        <div className="scene-corner corner-top" />
-        <div className="scene-corner corner-bottom" />
-        <div className="scene-label">
+        <div className="scene-corner corner-top" aria-hidden="true" />
+        <div className="scene-corner corner-bottom" aria-hidden="true" />
+        <div className="scene-label" aria-hidden="true">
           <ScanLine size={15} />
           <span>SPATIAL INTELLIGENCE</span>
           <span className="status-dot" />
         </div>
-        <div className="scene-tag scene-tag-ai">
+        <motion.div
+          className="scene-tag scene-tag-ai"
+          aria-hidden="true"
+          style={{ x: reduced ? 0 : moveX, y: reduced ? 0 : moveY }}
+        >
           <span className="mini-cross">+</span>
           <div>
             AI APPLICATION<small> {t('从智能交互到业务集成')} </small>
           </div>
-        </div>
-        <div className="scene-tag scene-tag-gis">
+        </motion.div>
+        <motion.div
+          className="scene-tag scene-tag-gis"
+          aria-hidden="true"
+          style={{ x: reduced ? 0 : rearX, y: reduced ? 0 : rearY }}
+        >
           <span className="mini-cross">+</span>
           <div>
             GEOSPATIAL SYSTEMS<small> {t('让多源空间数据可见')} </small>
           </div>
-        </div>
-        <div className="scene-footer">
+        </motion.div>
+        <div className="scene-footer" aria-hidden="true">
           <span>
             28.2282° N<br />
             112.9388° E

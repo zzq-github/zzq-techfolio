@@ -248,6 +248,7 @@ export const openSourceProjects = [
       '基于 MathJax 开发并维护 Vue 3 / React 双版本数学公式组件库，支持 LaTeX 公式渲染、编辑和组件化集成，已完成 NPM 发布及持续版本维护。',
     tags: ['Vue 3', 'React', 'MathJax', 'NPM', 'Open Source'],
     github: 'https://github.com/zzq-github/mathjax-beautiful',
+    demo: 'https://zzq-github.github.io/mathjax-beautiful/',
   },
 ]
 

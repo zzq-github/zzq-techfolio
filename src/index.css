@@ -14,6 +14,7 @@
   --cyan: #78ead6;
   --mint: #78ead6;
   --violet: #b0a4ff;
+  --sans: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --mono: 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
 }
 * {

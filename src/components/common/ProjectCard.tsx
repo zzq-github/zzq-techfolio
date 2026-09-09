@@ -9,10 +9,12 @@ export function ProjectCard({
   project,
   onOpen,
   onScene,
+  featured = false,
 }: {
   project: Project
   onOpen: (project: Project) => void
   onScene: (kind: SceneKind) => void
+  featured?: boolean
 }) {
   const { t } = usePreferences()
   const { projectPresentation } = useContent()
@@ -27,27 +29,49 @@ export function ProjectCard({
       'micro-frontend': Boxes,
     }[project.id] ?? Layers3
   return (
-    <article className={`project-card accent-${presentation.accent}`}>
-      <div
-        className="project-diagram"
-        aria-label={`${presentation.label}: ${presentation.stages.join(' / ')}`}
-      >
-        <div className="diagram-caption">
-          <span>{presentation.label}</span>
-          <span>{project.index} / SYSTEM</span>
-        </div>
-        <div className="diagram-icon">
-          <Icon size={42} strokeWidth={1} aria-hidden="true" />
-        </div>
-        <div className="diagram-stages">
-          {presentation.stages.map((stage, index) => (
-            <span key={stage}>
-              <span>{stage}</span>
-              {index < 2 && <ArrowRight size={14} aria-hidden="true" />}
+    <article
+      id={`project-${project.id}`}
+      tabIndex={-1}
+      className={`project-card ${featured ? 'is-featured' : 'is-compact'} accent-${presentation.accent}`}
+    >
+      {featured ? (
+        <div className="project-preview">
+          <img
+            src={`${import.meta.env.BASE_URL}previews/${project.id}.webp`}
+            alt={t('{name}概念三维场景预览', { name: project.name })}
+            width="925"
+            height="395"
+            loading="lazy"
+          />
+          <div className="preview-caption">
+            <span>
+              CASE {project.index} / {presentation.label}
             </span>
-          ))}
+            <span>{t('模拟演示 / 非项目实景')}</span>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div
+          className="project-diagram"
+          aria-label={`${presentation.label}: ${presentation.stages.join(' / ')}`}
+        >
+          <div className="diagram-caption">
+            <span>{presentation.label}</span>
+            <span>{project.index} / SYSTEM</span>
+          </div>
+          <div className="diagram-icon">
+            <Icon size={42} strokeWidth={1} aria-hidden="true" />
+          </div>
+          <div className="diagram-stages">
+            {presentation.stages.map((stage, index) => (
+              <span key={stage}>
+                <span>{stage}</span>
+                {index < 2 && <ArrowRight size={14} aria-hidden="true" />}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="project-body">
         <div className="project-meta">
           <span>CASE / {project.index}</span>

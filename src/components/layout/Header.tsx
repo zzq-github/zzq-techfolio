@@ -2,7 +2,7 @@ import { usePreferences } from '../../preferences/context'
 import { useEffect, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { PreferenceControls } from './PreferenceControls'
-import { motion, useScroll } from 'framer-motion'
+import { motion, useReducedMotion, useScroll } from 'framer-motion'
 
 const navItems = [
   { label: '首页', href: '#home' },
@@ -15,6 +15,7 @@ const navItems = [
 
 export function Header() {
   const { t } = usePreferences()
+  const reduced = useReducedMotion()
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('#home')
   const button = useRef<HTMLButtonElement>(null)
@@ -98,7 +99,15 @@ export function Header() {
                 setActive(item.href)
               }}
             >
-              {t(item.label)}
+              {active === item.href && (
+                <motion.span
+                  className="nav-indicator"
+                  layoutId="nav-indicator"
+                  transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+                  aria-hidden="true"
+                />
+              )}
+              <span className="nav-label">{t(item.label)}</span>
             </a>
           ))}
         </nav>

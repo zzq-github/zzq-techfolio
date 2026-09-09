@@ -1,0 +1,425 @@
+/* A shared cartographic language. All background layers are static and non-interactive. */
+:root {
+  --atmosphere-line: rgba(110, 197, 187, 0.07);
+  --atmosphere-glow: rgba(49, 146, 150, 0.12);
+  --terrain-opacity: 0.24;
+  --terrain-filter: none;
+}
+
+:root[data-theme='light'] {
+  --atmosphere-line: rgba(42, 112, 119, 0.075);
+  --atmosphere-glow: rgba(90, 167, 161, 0.14);
+  --terrain-opacity: 0.27;
+  --terrain-filter: brightness(0.58) saturate(0.65);
+}
+
+body,
+:root[data-theme='light'] body {
+  background: var(--bg);
+}
+
+body::before,
+:root[data-theme='light'] body::before {
+  opacity: 1;
+  background-image:
+    radial-gradient(circle, var(--atmosphere-line) 0.65px, transparent 0.8px),
+    linear-gradient(90deg, var(--atmosphere-line) 1px, transparent 1px);
+  background-size:
+    8px 8px,
+    160px 100%;
+  mask-image: linear-gradient(to right, black, transparent 32%, transparent 68%, black);
+}
+
+main {
+  position: relative;
+  overflow: clip;
+}
+
+:is(.hero, #skills, #projects, #experience, #open-source, .product-section, #tech-stack, .contact-section) {
+  position: relative;
+  isolation: isolate;
+}
+
+:is(.hero, #skills, #projects, #experience, #open-source, .product-section, #tech-stack)::before,
+:is(.hero, #skills, #projects, #open-source)::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero::before {
+  width: 110vw;
+  height: 110%;
+  left: 50%;
+  top: -5%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at 78% 42%, var(--atmosphere-glow), transparent 46%),
+    radial-gradient(ellipse at 15% 0%, var(--atmosphere-glow), transparent 40%);
+}
+
+.hero::after,
+#projects::before,
+.product-section::before {
+  background-image: url('/atmosphere/terrain.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: var(--terrain-opacity);
+  filter: var(--terrain-filter);
+}
+
+.hero::after {
+  width: 900px;
+  height: 650px;
+  right: -440px;
+  top: 0;
+  transform: rotate(-16deg);
+  mask-image: linear-gradient(100deg, transparent 8%, black 60%, transparent);
+}
+
+#skills::before {
+  inset: -30px -20vw 0;
+  background: radial-gradient(ellipse at 2% 35%, var(--atmosphere-glow), transparent 38%);
+}
+
+#skills::after,
+#open-source::after {
+  width: 370px;
+  height: 310px;
+  right: -180px;
+  top: 36px;
+  opacity: 0.7;
+  background:
+    radial-gradient(circle at 32px 32px, var(--mint) 2px, transparent 3px),
+    linear-gradient(90deg, var(--atmosphere-line) 1px, transparent 1px),
+    linear-gradient(var(--atmosphere-line) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    32px 32px,
+    32px 32px;
+  mask-image: radial-gradient(ellipse, black, transparent 70%);
+}
+
+#projects::before {
+  width: 900px;
+  height: 720px;
+  top: 50px;
+  left: -710px;
+  transform: rotate(28deg);
+  mask-image: linear-gradient(90deg, black 30%, transparent 80%);
+}
+
+#projects::after {
+  inset: 0 -20vw;
+  background:
+    radial-gradient(ellipse at 92% 24%, var(--atmosphere-glow), transparent 35%),
+    radial-gradient(ellipse at 0% 76%, var(--atmosphere-glow), transparent 32%);
+}
+
+#experience::before {
+  top: 180px;
+  bottom: 80px;
+  left: 125px;
+  width: 110px;
+  background: radial-gradient(ellipse, var(--atmosphere-glow), transparent 65%);
+}
+
+#open-source::before {
+  inset: 0 -16vw;
+  background: radial-gradient(ellipse at 50% 65%, var(--atmosphere-glow), transparent 68%);
+}
+
+#open-source::after {
+  top: 10px;
+  right: auto;
+  left: -190px;
+  transform: rotate(45deg);
+}
+
+.product-section::before {
+  width: 720px;
+  height: 520px;
+  right: -420px;
+  top: -30px;
+  mask-image: linear-gradient(90deg, transparent, black 65%, transparent);
+}
+
+#tech-stack::before {
+  inset: 0 -10vw;
+  background: radial-gradient(ellipse at 0% 55%, var(--atmosphere-glow), transparent 55%);
+}
+
+.contact-section {
+  background:
+    radial-gradient(ellipse at 50% 115%, color-mix(in srgb, var(--mint) 13%, transparent), transparent 65%),
+    var(--surface);
+}
+
+/* The frame stays still; only the globe, orbital paths and small labels have depth feedback. */
+.spatial-scene {
+  background:
+    radial-gradient(ellipse at 30% 18%, rgba(59, 123, 141, 0.15), transparent 57%),
+    radial-gradient(ellipse at 70% 80%, rgba(30, 87, 80, 0.12), transparent 50%), #060b10;
+  border-color: rgba(124, 189, 192, 0.2);
+  box-shadow:
+    0 0 80px -20px rgba(87, 189, 175, 0.13),
+    0 28px 65px -35px rgba(0, 0, 0, 0.65),
+    inset 0 1px rgba(185, 230, 226, 0.06);
+}
+
+.spatial-scene::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(rgba(112, 215, 200, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(112, 215, 200, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, transparent 32%, black 100%);
+}
+
+:root[data-theme='light'] .spatial-scene {
+  border-color: rgba(44, 99, 107, 0.28);
+  box-shadow:
+    0 0 70px -12px rgba(46, 130, 130, 0.2),
+    0 24px 55px -28px rgba(13, 46, 52, 0.32),
+    inset 0 1px rgba(204, 255, 246, 0.08);
+}
+
+.globe-visual,
+.globe-webgl {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.globe-webgl {
+  opacity: 0;
+  transition: opacity 650ms ease;
+}
+
+.globe-webgl.is-ready {
+  opacity: 1;
+}
+
+.scene-tag {
+  animation: none;
+  pointer-events: none;
+  padding: 10px 13px;
+  border-color: rgba(150, 213, 206, 0.19);
+  background: linear-gradient(120deg, rgba(18, 40, 47, 0.9), rgba(9, 25, 33, 0.76));
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+}
+
+.scene-tag-ai {
+  right: 4%;
+  top: 16%;
+}
+.scene-tag-gis {
+  left: 4%;
+  bottom: 16%;
+}
+.scene-tag small {
+  font-size: 11px;
+}
+.scene-label {
+  top: 6%;
+  left: 6%;
+}
+.scene-label .status-dot {
+  animation: none;
+}
+.scene-footer {
+  pointer-events: none;
+  left: 6%;
+  right: 6%;
+  bottom: 5%;
+  font-size: 9px;
+}
+.scene-footer b {
+  font-size: 7px;
+}
+.corner-top {
+  left: 3%;
+  top: 3%;
+}
+.corner-bottom {
+  right: 3%;
+  bottom: 3%;
+}
+
+.globe-origin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  visibility: hidden;
+  white-space: nowrap;
+  color: #f1d5ae;
+  font: 10px/1.4 var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.globe-origin-line {
+  width: 24px;
+  height: 1px;
+  margin-left: 9px;
+  background: linear-gradient(90deg, #eac18c88, #eac18c22);
+}
+
+.globe-origin-copy {
+  position: relative;
+  padding: 4px 7px;
+  border-left: 1px solid #eac18c66;
+  background: #091720b8;
+  border-radius: 0 4px 4px 0;
+}
+
+.globe-origin-copy small {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: block;
+  padding: 3px 6px;
+  background: #091720e8;
+  border-radius: 0 0 4px 4px;
+  font-size: 7px;
+  color: #a8b8be;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.spatial-scene:is(:hover, :focus-within) .globe-origin-copy small {
+  opacity: 1;
+}
+
+.globe-tools {
+  position: absolute;
+  z-index: 2;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid rgba(136, 193, 189, 0.18);
+  border-radius: 20px;
+  background: rgba(10, 24, 32, 0.9);
+  color: #a7c7c9;
+}
+
+.globe-caption {
+  font: 8px/1 var(--mono);
+  letter-spacing: 0.1em;
+  padding: 0 8px;
+}
+.globe-tools button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: #b9d8d6;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.globe-tools button:hover {
+  color: #defff4;
+  background: #78ead61c;
+}
+.globe-tools button:focus-visible {
+  outline: 2px solid #78ead6;
+  outline-offset: 2px;
+}
+.globe-tools button:active {
+  background: #78ead636;
+}
+
+@media (max-width: 767px) {
+  .hero::after {
+    width: 600px;
+    height: 440px;
+    right: -410px;
+    top: 500px;
+    opacity: calc(var(--terrain-opacity) * 0.7);
+  }
+  #projects::before {
+    left: -680px;
+  }
+  #skills::after {
+    right: -260px;
+  }
+  #experience::before {
+    left: 12px;
+    width: 64px;
+  }
+  .scene-tag {
+    padding: 8px 10px;
+    font-size: 8px;
+    gap: 7px;
+  }
+  .scene-tag small {
+    display: none;
+  }
+  .scene-tag-ai {
+    top: 17%;
+    right: 4%;
+  }
+  .scene-tag-gis {
+    bottom: 20%;
+    left: 4%;
+  }
+  .scene-label {
+    font-size: 8px;
+  }
+  .scene-footer {
+    bottom: 5%;
+    font-size: 7px;
+  }
+  .scene-footer span:last-child {
+    display: none;
+  }
+  .globe-tools {
+    left: auto;
+    right: 4%;
+    bottom: 4%;
+    transform: none;
+  }
+  .globe-tools button {
+    width: 40px;
+    height: 40px;
+  }
+  .globe-caption {
+    font-size: 7px;
+  }
+  .globe-origin {
+    font-size: 8px;
+  }
+  .globe-origin-line {
+    width: 12px;
+    margin-left: 7px;
+  }
+  .globe-origin-copy small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-webgl,
+  .globe-origin-copy small,
+  .globe-tools button {
+    transition: none;
+  }
+}
