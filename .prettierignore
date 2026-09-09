@@ -2,5 +2,4 @@ dist
 node_modules
 tmp
 pnpm-lock.yaml
-docs
 public/data/*.geojson
