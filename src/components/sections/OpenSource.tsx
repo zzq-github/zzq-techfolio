@@ -1,14 +1,17 @@
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { ArrowUpRight, CodeXml } from 'lucide-react'
-import { openSourceProjects } from '../../data/profile'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
 import { TechTag } from '../common/TechTag'
 
 export function OpenSource() {
+  const { t } = usePreferences()
+  const { openSourceProjects } = useContent()
   return (
     <section className="section" id="open-source">
       <Reveal>
-        <SectionTitle index="04" eyebrow="OPEN SOURCE" title="把工程经验沉淀为复用能力。" />
+        <SectionTitle index="04" eyebrow="OPEN SOURCE" title={t('把工程经验沉淀为复用能力。')} />
       </Reveal>
       <div className="opensource-grid">
         {openSourceProjects.map((project) => (
@@ -25,11 +28,11 @@ export function OpenSource() {
                 </div>
                 <div className="source-actions">
                   <a href={project.github} target="_blank" rel="noreferrer">
-                    <CodeXml size={16} aria-hidden="true" /> View GitHub
+                    <CodeXml size={16} aria-hidden="true" /> {t('查看源码')}
                   </a>
                   {'demo' in project && project.demo && (
                     <a href={project.demo} target="_blank" rel="noreferrer">
-                      Live Demo <ArrowUpRight size={16} aria-hidden="true" />
+                      {t('在线演示')} <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
                   )}
                 </div>

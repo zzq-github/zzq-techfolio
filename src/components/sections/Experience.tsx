@@ -1,17 +1,20 @@
-import { experiences } from '../../data/profile'
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
 import { TechTag } from '../common/TechTag'
 
 export function Experience() {
+  const { t } = usePreferences()
+  const { experiences } = useContent()
   return (
     <section className="section" id="experience">
       <Reveal>
         <SectionTitle
           index="03"
           eyebrow="EXPERIENCE"
-          title="十年，从交付走向架构。"
-          description="持续在业务系统、前端架构、三维 GIS 与 AI 应用之间拓展工程边界。"
+          title={t('十年，从交付走向架构。')}
+          description={t('持续在业务系统、前端架构、三维 GIS 与 AI 应用之间拓展工程边界。')}
         />
       </Reveal>
       <div className="timeline">

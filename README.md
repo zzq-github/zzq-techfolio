@@ -28,6 +28,22 @@
 - 系统开启“减少动态效果”时默认暂停；不支持 WebGL 2 或上下文丢失时显示说明和重试入口，其他项目内容仍可浏览。
 - 场景参数：`src/components/scenes/sceneData.ts`；模型与渲染：`sceneEngine.ts`；交互组件：`SceneLab.tsx`；样式：`scenes.css`。
 
+## 语言与主题
+
+- 导航栏提供中文 / English 切换和亮色、暗色、跟随系统三种外观选项，桌面与手机均可使用。
+- 首次访问默认中文、跟随系统。选择保存在本机浏览器中；刷新后恢复，并支持同源标签页间同步。浏览器禁用存储时仍可在当前访问中切换。
+- 主题初始化脚本在 React 和样式加载前应用外观，避免已保存主题在首屏闪烁。选择“跟随系统”时实时响应系统配色变化，手动选择亮色或暗色时保持该选择。
+- 地球与三维画布保留深色，外围面板、按钮和弹窗随页面主题变化。切换语言或主题不重建三维场景，也不重置演示参数。
+- 英文模式覆盖简历内容、项目详情、三维提示与无障碍标签；页面语言、标题、描述及 Open Graph locale 同步更新。技术名称及装饰性英文标题保留原样。
+- PDF 仍为现有中文版本，英文入口标注 `Resume (Chinese)`。这是一套页面的语言偏好切换，没有新增独立英文 URL 或英文 PDF。
+
+维护入口：
+
+- 中文简历：`src/data/profile.ts`；中文场景描述：`src/components/scenes/sceneData.ts`。
+- 英文译文：`src/i18n/en.ts`，使用完整中文原文作为键；修改或增加中文内容时应同步更新对应译文。
+- 组件文案：通过 `usePreferences().t()` 渲染；简历内容通过 `useContent()` 获取当前语言版本。
+- 外观变量与适配：`src/themes.css`；偏好状态：`src/preferences/`；首屏初始化：`public/preferences.js`。
+
 ## 本地运行
 
 环境要求：Node.js 20+、pnpm 9+。
@@ -37,7 +53,7 @@ pnpm install
 pnpm dev
 ```
 
-开发服务器默认运行在 `http://127.0.0.1:5173/`。
+开发服务器默认运行在 `http://127.0.0.1:5173/zzq-techfolio/`，与生产环境使用相同的子路径。
 
 ## 构建与检查
 
@@ -49,7 +65,23 @@ pnpm build
 pnpm preview
 ```
 
+浏览器回归检查：
+
+```bash
+pnpm test:e2e
+```
+
+测试先执行生产构建，再启动独立的 5178 端口预览，覆盖译文完整性、发布路径、双语弹窗、主题持久化、系统主题变化、首屏初始化、存储不可用、三维状态保留，以及 320 / 390 / 900 / 1280px 下的双语和明暗布局。报告位于忽略提交的 `tmp/test-results/`。Windows 默认使用已安装的 Chrome；其他系统先执行 `pnpm exec playwright install chromium`。
+
 生产构建产物位于 `dist/`。
+
+本地生产预览地址为 `http://127.0.0.1:4173/zzq-techfolio/`。
+
+## 换行与格式规范
+
+- 文本文件统一使用 UTF-8、LF 换行和两个空格缩进。
+- `.gitattributes` 固定 Git 检出与提交时的文本换行，避免 Windows `core.autocrlf` 导致格式检查失败；PDF 按二进制处理。
+- `.editorconfig` 与 Prettier 的 `endOfLine: 'lf'` 保持一致。修改后执行 `pnpm format:check`，需要格式化时执行 `pnpm format`。
 
 ## 修改简历数据
 
@@ -83,16 +115,29 @@ src/
 │   ├── common/
 │   ├── hero/
 │   ├── layout/
+│   ├── scenes/
 │   └── sections/
 ├── config/
 │   └── site.ts
 ├── data/
 │   └── profile.ts
+├── i18n/
+├── preferences/
 ├── App.tsx
 ├── index.css
+├── themes.css
 └── main.tsx
 ```
 
 ## 部署说明
 
-当前阶段仅包含本地开发和静态构建，不包含 GitHub Pages 工作流。后续准备发布时，可根据仓库名称设置 Vite `base`，再增加 GitHub Actions 部署配置。
+目标仓库为 `zzq-github/zzq-techfolio`，目标发布地址为 `https://zzq-github.github.io/zzq-techfolio/`。
+
+- Vite `base` 统一设为 `/zzq-techfolio/`，本地开发、生产构建和预览均使用该路径。
+- React 中的 PDF 简历与地理数据通过 `import.meta.env.BASE_URL` 拼接地址；新增运行时 `public/` 资源引用时也应遵循此约定。
+- HTML 中的 favicon 和主题初始化脚本分别引用 `/favicon-3d.png`、`/preferences.js`，由 Vite 自动添加 `base` 前缀；这些资源属性不要再手工添加 `%BASE_URL%`，以免开发环境出现重复前缀。
+- 3D Logo 原图为 `public/brand-logo-3d.png`；导航栏使用透明背景的 `brand-logo-3d-144.png`（约 32 KB），浏览器图标使用 `favicon-3d.png`（64 × 64，约 8 KB）。
+- `index.html` 的 canonical 与 Open Graph URL 指向目标发布地址。
+- 若迁移到用户主页仓库或自定义域名，需要同步调整 `vite.config.ts` 的 `base` 和 `index.html` 的 canonical、Open Graph URL。
+
+当前仅完成发布路径适配，尚未配置 GitHub Actions / GitHub Pages 自动部署，也未进行线上发布。

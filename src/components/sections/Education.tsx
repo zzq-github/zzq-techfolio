@@ -1,7 +1,8 @@
-import { education } from '../../data/profile'
+import { useContent } from '../../i18n/useContent'
 import { Reveal } from '../common/Reveal'
 
 export function Education() {
+  const { education } = useContent()
   return (
     <section className="section education-section" aria-labelledby="education-title">
       <Reveal>

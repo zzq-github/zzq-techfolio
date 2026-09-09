@@ -1,12 +1,15 @@
-import { techStack } from '../../data/profile'
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
 
 export function TechStack() {
+  const { t } = usePreferences()
+  const { techStack } = useContent()
   return (
     <section className="section" id="tech-stack">
       <Reveal>
-        <SectionTitle index="06" eyebrow="TECH UNIVERSE" title="技术不是清单，而是组合方式。" />
+        <SectionTitle index="06" eyebrow="TECH UNIVERSE" title={t('技术不是清单，而是组合方式。')} />
       </Reveal>
       <Reveal>
         <div className="universe-grid">

@@ -1,11 +1,14 @@
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { ArrowDown, ArrowUpRight, CodeXml, FileDown, MapPin, ScanLine } from 'lucide-react'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import { siteConfig } from '../../config/site'
-import { profile } from '../../data/profile'
 import type { PointerEvent } from 'react'
 import { GeoGlobe } from './GeoGlobe'
 
 export function Hero() {
+  const { t } = usePreferences()
+  const { profile } = useContent()
   const reduced = useReducedMotion()
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -56,7 +59,8 @@ export function Hero() {
         <p className="hero-summary">{profile.summary}</p>
         <div className="hero-actions">
           <a className="button primary" href="#projects">
-            探索我的项目 <ArrowUpRight size={17} aria-hidden="true" />
+            {' '}
+            {t('探索我的项目')} <ArrowUpRight size={17} aria-hidden="true" />
           </a>
           {siteConfig.enableResumeDownload && (
             <a
@@ -64,9 +68,9 @@ export function Hero() {
               href={profile.resumeUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label="在新窗口打开 PDF 简历"
+              aria-label={t('在新窗口打开 PDF 简历')}
             >
-              <FileDown size={17} aria-hidden="true" /> 下载简历
+              <FileDown size={17} aria-hidden="true" /> {t('下载简历')}{' '}
             </a>
           )}
           <a
@@ -74,13 +78,14 @@ export function Hero() {
             href={profile.github}
             target="_blank"
             rel="noreferrer"
-            aria-label="在新窗口打开 GitHub"
+            aria-label={t('在新窗口打开 GitHub')}
           >
             <CodeXml size={19} aria-hidden="true" />
           </a>
         </div>
         <div className="hero-footnote">
-          <MapPin size={14} aria-hidden="true" /> {profile.location}，中国 <span /> 10 年工程经验
+          <MapPin size={14} aria-hidden="true" /> {profile.location}
+          {t('，中国')} <span /> {t('10 年工程经验')}{' '}
         </div>
       </motion.div>
       <motion.div
@@ -99,13 +104,13 @@ export function Hero() {
         <div className="scene-tag scene-tag-ai">
           <span className="mini-cross">+</span>
           <div>
-            AI APPLICATION<small>从智能交互到业务集成</small>
+            AI APPLICATION<small> {t('从智能交互到业务集成')} </small>
           </div>
         </div>
         <div className="scene-tag scene-tag-gis">
           <span className="mini-cross">+</span>
           <div>
-            GEOSPATIAL SYSTEMS<small>让多源空间数据可见</small>
+            GEOSPATIAL SYSTEMS<small> {t('让多源空间数据可见')} </small>
           </div>
         </div>
         <div className="scene-footer">
@@ -122,7 +127,7 @@ export function Hero() {
       </motion.div>
       <div className="hero-bottom">
         <a href="#skills">
-          <ArrowDown size={15} aria-hidden="true" /> 向下探索 <span>SCROLL TO EXPLORE</span>
+          <ArrowDown size={15} aria-hidden="true" /> {t('向下探索')} <span>SCROLL TO EXPLORE</span>
         </a>
         <div>
           AI <i>×</i> GIS <i>×</i> ENGINEERING

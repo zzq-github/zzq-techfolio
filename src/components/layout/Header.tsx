@@ -1,5 +1,7 @@
+import { usePreferences } from '../../preferences/context'
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Command, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { PreferenceControls } from './PreferenceControls'
 import { motion, useScroll } from 'framer-motion'
 
 const navItems = [
@@ -12,6 +14,7 @@ const navItems = [
 ]
 
 export function Header() {
+  const { t } = usePreferences()
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('#home')
   const button = useRef<HTMLButtonElement>(null)
@@ -60,12 +63,13 @@ export function Header() {
   return (
     <header className="site-header" ref={header}>
       <a className="skip-link" href="#main">
-        跳转到正文
+        {' '}
+        {t('跳转到正文')}{' '}
       </a>
       <div className="header-inner">
-        <a className="brand" href="#home" aria-label="周志强，返回首页">
+        <a className="brand" href="#home" aria-label={t('周志强，返回首页')}>
           <span className="brand-icon">
-            <Command size={20} aria-hidden="true" />
+            <img src={`${import.meta.env.BASE_URL}brand-logo-3d-144.png`} width="44" height="44" alt="" />
           </span>
           <span>
             ZZQ<span className="brand-period">.</span>
@@ -76,14 +80,14 @@ export function Header() {
           ref={button}
           className="menu-button"
           type="button"
-          aria-label={open ? '关闭导航菜单' : '打开导航菜单'}
+          aria-label={open ? t('关闭导航菜单') : t('打开导航菜单')}
           aria-expanded={open}
           aria-controls="main-navigation"
           onClick={() => setOpen(!open)}
         >
           {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
-        <nav id="main-navigation" className={open ? 'nav-open' : ''} aria-label="主导航">
+        <nav id="main-navigation" className={open ? 'nav-open' : ''} aria-label={t('主导航')}>
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -94,13 +98,11 @@ export function Header() {
                 setActive(item.href)
               }}
             >
-              {item.label}
+              {t(item.label)}
             </a>
           ))}
         </nav>
-        <a className="header-contact" href="#contact">
-          聊聊合作 <ArrowUpRight size={14} aria-hidden="true" />
-        </a>
+        <PreferenceControls />
       </div>
       <motion.div className="reading-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
     </header>

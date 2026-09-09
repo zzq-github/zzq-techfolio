@@ -273,7 +273,7 @@ export function GeoGlobe() {
     document.addEventListener('visibilitychange', syncPlayback)
     resize()
     syncPlayback()
-    fetch('/data/land-110m.geojson', { signal: controller.signal })
+    fetch(`${import.meta.env.BASE_URL}data/land-110m.geojson`, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error('Land geometry unavailable')
         return response.json() as Promise<LandData>

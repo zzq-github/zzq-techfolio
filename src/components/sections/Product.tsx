@@ -1,14 +1,21 @@
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { ArrowRight, Wrench } from 'lucide-react'
-import { product } from '../../data/profile'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
 import { TechTag } from '../common/TechTag'
 
 export function Product() {
+  const { t } = usePreferences()
+  const { product } = useContent()
   return (
     <section className="section product-section">
       <Reveal>
-        <SectionTitle index="05" eyebrow="SIDE PROJECT / PRODUCT" title="从高频问题出发，做一件趁手工具。" />
+        <SectionTitle
+          index="05"
+          eyebrow="SIDE PROJECT / PRODUCT"
+          title={t('从高频问题出发，做一件趁手工具。')}
+        />
       </Reveal>
       <Reveal>
         <article className="product-card">
@@ -26,7 +33,10 @@ export function Product() {
               ))}
             </div>
           </div>
-          <div className="product-flow" aria-label={`产品流程：${product.flow.join('、')}`}>
+          <div
+            className="product-flow"
+            aria-label={t('产品流程：{steps}', { steps: product.flow.join(' → ') })}
+          >
             {product.flow.map((step, index) => (
               <span key={step}>
                 {step}

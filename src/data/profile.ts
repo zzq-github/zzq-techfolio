@@ -35,7 +35,7 @@ export const profile = {
   locationCode: 'CHANGSHA · 28.2282° N, 112.9388° E',
   github: 'https://github.com/zzq-github',
   email: '15096061897@163.com',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: `${import.meta.env.BASE_URL}resume.pdf`,
   summary:
     '10 年软件研发经验，专注 AI Agent、GIS 三维可视化与全栈应用开发，持续探索 AI 与空间信息技术在真实业务中的工程化落地。',
   statement: 'Building intelligent applications between AI, GIS and the real world.',

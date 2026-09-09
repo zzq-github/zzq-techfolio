@@ -1,6 +1,8 @@
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
-import { projects, type Project } from '../../data/profile'
+import { type Project } from '../../data/profile'
 import { ProjectCard } from '../common/ProjectCard'
 import { Reveal } from '../common/Reveal'
 import { SectionTitle } from '../common/SectionTitle'
@@ -9,7 +11,10 @@ import { SceneLab } from '../scenes/SceneLab'
 import type { SceneKind } from '../scenes/sceneData'
 
 export function Projects() {
-  const [selected, setSelected] = useState<Project | null>(null)
+  const { t } = usePreferences()
+  const { projects } = useContent()
+  const [selectedId, setSelected] = useState<string | null>(null)
+  const selected = projects.find((project) => project.id === selectedId)
   const [scene, setScene] = useState<SceneKind>('earthwork')
   const openScene = (kind: SceneKind) => {
     setScene(kind)
@@ -24,7 +29,7 @@ export function Projects() {
   const opener = useRef<HTMLElement | null>(null)
   useEffect(() => {
     const node = dialog.current
-    if (!selected || !node) return
+    if (!selectedId || !node) return
     node.showModal()
     document.body.classList.add('modal-open')
     return () => {
@@ -32,10 +37,10 @@ export function Projects() {
       if (node.open) node.close()
       opener.current?.focus()
     }
-  }, [selected])
+  }, [selectedId])
   const openProject = (project: Project) => {
     opener.current = document.activeElement as HTMLElement
-    setSelected(project)
+    setSelected(project.id)
   }
   return (
     <section className="section" id="projects">
@@ -43,8 +48,8 @@ export function Projects() {
         <SectionTitle
           index="02"
           eyebrow="SELECTED WORK / 06 PROJECTS"
-          title="真实业务，真实构建。"
-          description="用技术回应具体问题。从空间数据到业务系统，从智能交互到工程交付。"
+          title={t('真实业务，真实构建。')}
+          description={t('用技术回应具体问题。从空间数据到业务系统，从智能交互到工程交付。')}
         />
       </Reveal>
       <SceneLab selected={scene} onSelect={setScene} />
@@ -78,7 +83,7 @@ export function Projects() {
             type="button"
             className="modal-close"
             onClick={() => setSelected(null)}
-            aria-label="关闭项目详情"
+            aria-label={t('关闭项目详情')}
           >
             <X aria-hidden="true" />
           </button>
@@ -89,7 +94,7 @@ export function Projects() {
           <p id="project-modal-description" className="modal-summary">
             {selected.description}
           </p>
-          <h3>核心工作</h3>
+          <h3> {t('核心工作')} </h3>
           <ul>
             {selected.highlights.map((item) => (
               <li key={item}>{item}</li>

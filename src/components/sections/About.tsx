@@ -1,5 +1,6 @@
+import { usePreferences } from '../../preferences/context'
+import { useContent } from '../../i18n/useContent'
 import { useEffect, useRef, useState } from 'react'
-import { metrics } from '../../data/profile'
 import { Reveal } from '../common/Reveal'
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
@@ -51,8 +52,10 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export function About() {
+  const { t } = usePreferences()
+  const { metrics } = useContent()
   return (
-    <section className="section metrics-section" aria-label="职业数据概览">
+    <section className="section metrics-section" aria-label={t('职业数据概览')}>
       <Reveal>
         <div className="metrics-grid">
           {metrics.map((metric, index) => (
